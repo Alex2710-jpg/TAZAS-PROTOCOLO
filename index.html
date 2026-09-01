@@ -69,13 +69,25 @@
 
         <div class="mt-3 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
           <h3 class="text-xs font-bold text-amber-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <i class="fa-solid fa-font"></i> Texto y Nombres de Unidades
+            <i class="fa-solid fa-font"></i> Texto, Lemas y Efecto Arco
           </h3>
           <div class="flex gap-2">
             <input type="text" id="textInput" placeholder="Ej. SECRETARÍA DE MARINA | ARM POZA RICA" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
             <button onclick="addText()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-4 py-1.5 rounded-lg text-xs uppercase transition">
               Añadir
             </button>
+          </div>
+
+          <div class="mt-3 p-2.5 bg-slate-900/80 rounded-lg border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-3">
+            <label class="text-[11px] text-amber-300 font-semibold flex items-center gap-1.5">
+              <i class="fa-solid fa-bezier-curve"></i> Curvar en Arco:
+            </label>
+            <div class="flex items-center gap-2 w-full md:w-2/3">
+              <span class="text-[10px] text-slate-500">Abajo</span>
+              <input type="range" id="curveSlider" min="-120" max="120" value="0" oninput="updateCurvedText(this.value)" class="w-full accent-amber-500 cursor-pointer">
+              <span class="text-[10px] text-slate-500">Arriba</span>
+              <button onclick="resetCurvature()" class="text-[10px] bg-slate-800 hover:bg-slate-700 px-2 py-0.5 rounded text-slate-300">Reset</button>
+            </div>
           </div>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3 pt-2.5 border-t border-slate-800">
@@ -200,7 +212,7 @@
 
         <div id="cardBox" class="hidden bg-slate-950 p-3 rounded-xl border border-sky-500/30 text-xs text-center">
           <p class="text-slate-300 text-xs mb-1">Pago seguro con tarjeta de débito/crédito vía Mercado Pago.</p>
-          <p class="text-[11px] text-slate-400">Al confirmar, serás redirigido al enlace oficial de pago.</p>
+          <p class="text-[11px] text-slate-400">Al confirmar, serás contactado vía WhatsApp con el enlace oficial de pago.</p>
         </div>
       </div>
 
@@ -236,16 +248,8 @@
     // ==========================================
     // CONFIGURACIÓN DE TU NEGOCIO
     // ==========================================
-    const APPS_SCRIPT_URL = "TU_URL_DE_APPS_SCRIPT_AQUI"; // Tu URL terminada en /exec
-    const MI_WHATSAPP = "521XXXXXXXXXX"; // Tu WhatsApp con lada internacional
-
-    // LINKS DE PAGO DE MERCADO PAGO POR PAQUETE (Opcionales para cobro con tarjeta)
-    // Puedes crearlos desde la App de Mercado Pago > Cobrar con Link > Poner monto exacto
-    const LINKS_MERCADO_PAGO = {
-      "24": "https://mpago.la/tu-link-24-tazas",
-      "36": "https://mpago.la/tu-link-36-tazas",
-      "48": "https://mpago.la/tu-link-48-tazas"
-    };
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxO8OnS1lsdaKmzNLOljUpn2z4okD8STI3LVfFtUgqCjVXnZFJPT72gbRNQmPjFhcXl3w/exec"; 
+    const MI_WHATSAPP = "5212292651155"; 
 
     let selectedMethod = "spei";
 
@@ -253,6 +257,22 @@
     const canvas = new fabric.Canvas('mugCanvas', {
       backgroundColor: '#070d1d'
     });
+
+    // Actualizar selector de curva cuando el usuario cambia de objeto
+    canvas.on('selection:created', onObjectSelected);
+    canvas.on('selection:updated', onObjectSelected);
+    canvas.on('selection:cleared', function() {
+      document.getElementById('curveSlider').value = 0;
+    });
+
+    function onObjectSelected(e) {
+      const obj = e.selected[0];
+      if (obj && obj.customType === 'curvedText') {
+        document.getElementById('curveSlider').value = obj.curvature || 0;
+      } else {
+        document.getElementById('curveSlider').value = 0;
+      }
+    }
 
     // --- MANEJO DE RECORTE (Cropper.js) ---
     let cropper = null;
@@ -278,7 +298,7 @@
 
         if (cropper) cropper.destroy();
         cropper = new Cropper(image, {
-          aspectRatio: NaN, // Libre para cualquier forma de escudo
+          aspectRatio: NaN,
           viewMode: 1
         });
       };
@@ -311,58 +331,168 @@
       cancelCrop();
     }
 
-    // --- TEXTOS Y ESTILOS ---
+    // --- GENERADOR DE TEXTO CURVADO EN ARCO ---
+    function createCurvedGroup(textString, curvature, options) {
+      const letters = textString.split('');
+      const charObjects = [];
+      const radius = 180; 
+      const curveRad = (curvature * Math.PI) / 180;
+      const angleStep = letters.length > 1 ? curveRad / (letters.length - 1) : 0;
+      const startAngle = -curveRad / 2 - Math.PI / 2;
+
+      let currentX = 0;
+
+      letters.forEach((char, index) => {
+        let leftPos, topPos, angleDeg;
+
+        if (Math.abs(curvature) < 2) {
+          leftPos = currentX;
+          topPos = 0;
+          angleDeg = 0;
+          currentX += (options.fontSize || 18) * 0.7;
+        } else {
+          const charAngle = startAngle + (index * angleStep);
+          leftPos = Math.cos(charAngle) * radius;
+          topPos = Math.sin(charAngle) * radius + (curvature > 0 ? radius : -radius);
+          angleDeg = (charAngle * 180 / Math.PI) + 90;
+        }
+
+        const charObj = new fabric.Text(char, {
+          left: leftPos,
+          top: topPos,
+          fontFamily: options.fontFamily || 'Cinzel',
+          fill: options.fill || '#D4AF37',
+          fontWeight: options.fontWeight || 'bold',
+          fontStyle: options.fontStyle || 'normal',
+          underline: options.underline || false,
+          fontSize: options.fontSize || 18,
+          originX: 'center',
+          originY: 'center',
+          angle: angleDeg
+        });
+        charObjects.push(charObj);
+      });
+
+      const group = new fabric.Group(charObjects, {
+        left: options.left || 260,
+        top: options.top || 115,
+        originX: 'center',
+        originY: 'center',
+        angle: options.angle || 0
+      });
+
+      group.customType = 'curvedText';
+      group.rawText = textString;
+      group.curvature = curvature;
+      group.textOptions = options;
+
+      return group;
+    }
+
     function addText() {
       const textVal = document.getElementById('textInput').value.trim();
       if (!textVal) return;
-      const text = new fabric.IText(textVal, {
+
+      const options = {
         left: 260,
         top: 115,
-        originX: 'center',
-        originY: 'center',
         fontFamily: document.getElementById('fontFamilySelect').value,
         fill: '#D4AF37',
         fontWeight: 'bold',
+        fontStyle: 'normal',
+        underline: false,
         fontSize: 18,
-        textAlign: 'center'
-      });
-      canvas.add(text);
-      canvas.setActiveObject(text);
+        angle: 0
+      };
+
+      const curvedGroup = createCurvedGroup(textVal, 0, options);
+      canvas.add(curvedGroup);
+      canvas.setActiveObject(curvedGroup);
       document.getElementById('textInput').value = '';
+      document.getElementById('curveSlider').value = 0;
       canvas.renderAll();
+    }
+
+    function updateCurvedText(value) {
+      const activeObj = canvas.getActiveObject();
+      if (!activeObj || activeObj.customType !== 'curvedText') return;
+
+      const curvature = parseFloat(value);
+      const textString = activeObj.rawText;
+      const options = Object.assign({}, activeObj.textOptions, {
+        left: activeObj.left,
+        top: activeObj.top,
+        angle: activeObj.angle
+      });
+
+      const newGroup = createCurvedGroup(textString, curvature, options);
+
+      canvas.remove(activeObj);
+      canvas.add(newGroup);
+      canvas.setActiveObject(newGroup);
+      canvas.renderAll();
+    }
+
+    function resetCurvature() {
+      document.getElementById('curveSlider').value = 0;
+      updateCurvedText(0);
     }
 
     function changeFontFamily(f) {
       const obj = canvas.getActiveObject();
-      if (obj && obj.type === 'i-text') { obj.set('fontFamily', f); canvas.renderAll(); }
+      if (!obj) return;
+      if (obj.customType === 'curvedText') {
+        obj.textOptions.fontFamily = f;
+        updateCurvedText(obj.curvature);
+      }
     }
+
     function changeTextColor(c) {
       const obj = canvas.getActiveObject();
-      if (obj && obj.type === 'i-text') { obj.set('fill', c); canvas.renderAll(); }
+      if (!obj) return;
+      if (obj.customType === 'curvedText') {
+        obj.textOptions.fill = c;
+        updateCurvedText(obj.curvature);
+      }
     }
+
     function toggleBold() {
       const obj = canvas.getActiveObject();
-      if (obj && obj.type === 'i-text') { obj.set('fontWeight', obj.fontWeight === 'bold' ? 'normal' : 'bold'); canvas.renderAll(); }
+      if (!obj) return;
+      if (obj.customType === 'curvedText') {
+        obj.textOptions.fontWeight = obj.textOptions.fontWeight === 'bold' ? 'normal' : 'bold';
+        updateCurvedText(obj.curvature);
+      }
     }
+
     function toggleItalic() {
       const obj = canvas.getActiveObject();
-      if (obj && obj.type === 'i-text') { obj.set('fontStyle', obj.fontStyle === 'italic' ? 'normal' : 'italic'); canvas.renderAll(); }
+      if (!obj) return;
+      if (obj.customType === 'curvedText') {
+        obj.textOptions.fontStyle = obj.textOptions.fontStyle === 'italic' ? 'normal' : 'italic';
+        updateCurvedText(obj.curvature);
+      }
     }
+
     function rotateElement(deg) {
       const obj = canvas.getActiveObject();
       if (obj) { obj.rotate((obj.angle || 0) + deg); canvas.renderAll(); }
     }
+
     function resetRotation() {
       const obj = canvas.getActiveObject();
       if (obj) { obj.rotate(0); canvas.renderAll(); }
     }
+
     function deleteSelected() {
       const obj = canvas.getActiveObject();
       if (obj) canvas.remove(obj);
     }
+
     function clearCanvas() {
       canvas.clear();
       canvas.setBackgroundColor('#070d1d', canvas.renderAll.bind(canvas));
+      document.getElementById('curveSlider').value = 0;
     }
 
     // --- RESUMEN Y MÉTODOS DE PAGO ---
@@ -432,7 +562,6 @@
       };
 
       try {
-        // Enviar con modo no-cors a Apps Script
         await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
@@ -440,15 +569,10 @@
           body: JSON.stringify(payload)
         });
       } catch (err) {
-        console.warn("Envío Apps Script finalizado/asíncrono");
+        console.warn("Envío procesado de forma asíncrona.");
       }
 
-      // Si seleccionó Tarjeta y configuraste el link de Mercado Pago, abre el link de pago
-      if (selectedMethod === 'card' && LINKS_MERCADO_PAGO[qty] && !LINKS_MERCADO_PAGO[qty].includes("tu-link")) {
-        window.open(LINKS_MERCADO_PAGO[qty], '_blank');
-      }
-
-      // Redirigir a WhatsApp con el desglose del pedido y confirmación
+      // Redirigir a WhatsApp
       const msg = encodeURIComponent(
         `*SOLICITUD DE PEDIDO - TAZAS DE PROTOCOLO*\n\n` +
         `*Folio:* ${localOrderId}\n` +
@@ -458,7 +582,7 @@
         `*Total:* $${total.toLocaleString()} MXN (Envío y Blíster incluidos)\n` +
         `*Método:* ${selectedMethod === 'spei' ? 'Transferencia Bancaria' : 'Tarjeta de Crédito/Débito'}\n` +
         `*Destino:* ${address}\n\n` +
-        `_He generado mi diseño en la plataforma. Envío el comprobante para iniciar producción._`
+        `_He generado mi diseño con lema curvado en la plataforma. Envío comprobante para iniciar producción._`
       );
       window.location.href = `https://wa.me/${MI_WHATSAPP}?text=${msg}`;
     }
