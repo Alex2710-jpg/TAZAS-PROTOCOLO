@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tazas Conmemorativas e Institucionales | DTF UV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
+
+  <!-- Header -->
+  <header class="border-b border-amber-600/30 bg-slate-950 py-6 px-4 text-center">
+    <h1 class="text-3xl font-bold tracking-wide text-amber-400 uppercase">Tazas Conmemorativas de Protocolo</h1>
+    <p class="text-sm text-slate-400 mt-1">Impresión DTF UV de Alto Relieve | Acabado de Gala Naval e Institucional</p>
+    <div class="mt-3 flex justify-center gap-4 text-xs text-amber-200">
+      <span><i class="fa-solid fa-box-open mr-1"></i> Blíster Caballete Incluido</span>
+      <span><i class="fa-solid fa-truck-fast mr-1"></i> Envío Nacional Incluido</span>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Columna 1: Diseñador Interactivo (Lg: 7 cols) -->
+    <section class="lg:col-span-7 bg-slate-800/80 p-6 rounded-xl border border-slate-700 shadow-xl">
+      <h2 class="text-lg font-semibold text-amber-400 mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-compass-drafting"></i> 1. Diseña tu Taza Conmemorativa
+      </h2>
+
+      <!-- Lienzo Fabric.js -->
+      <div class="flex justify-center bg-slate-950 rounded-lg p-3 border border-slate-700 overflow-hidden">
+        <canvas id="mugCanvas" width="500" height="250" class="rounded shadow"></canvas>
+      </div>
+      <p class="text-xs text-slate-400 text-center mt-2">Área imprimible: Frente, Centro y Reverso de la taza</p>
+
+      <!-- Herramientas de edición -->
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Subir escudo -->
+        <div class="bg-slate-900 p-4 rounded-lg border border-slate-700">
+          <label class="block text-xs font-semibold text-slate-300 mb-2">SUBIR ESCUDO / LOGO (PNG/JPG):</label>
+          <input type="file" id="imageLoader" accept="image/*" class="text-xs text-slate-400 file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:bg-amber-600 file:text-white hover:file:bg-amber-500 cursor-pointer">
+        </div>
+
+        <!-- Agregar texto -->
+        <div class="bg-slate-900 p-4 rounded-lg border border-slate-700">
+          <label class="block text-xs font-semibold text-slate-300 mb-2">AGREGAR LEYENDA / NOMBRE:</label>
+          <div class="flex gap-2">
+            <input type="text" id="textInput" placeholder="Ej. ARM XINANTÉCATL" class="w-full bg-slate-800 border border-slate-600 rounded px-3 py-1 text-sm text-white focus:outline-none focus:border-amber-400">
+            <button onclick="addText()" class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-1 rounded text-xs font-semibold">Añadir</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles de manipulación -->
+      <div class="flex flex-wrap gap-2 mt-4 justify-end">
+        <button onclick="changeTextColor('#D4AF37')" class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3 py-1 rounded text-xs hover:bg-amber-500/30">Texto Dorado</button>
+        <button onclick="changeTextColor('#FFFFFF')" class="bg-slate-700 text-white border border-slate-600 px-3 py-1 rounded text-xs hover:bg-slate-600">Texto Blanco</button>
+        <button onclick="deleteSelected()" class="bg-rose-900/40 text-rose-300 border border-rose-700 px-3 py-1 rounded text-xs hover:bg-rose-900/60">Eliminar Seleccionado</button>
+        <button onclick="clearCanvas()" class="bg-slate-800 text-slate-400 border border-slate-700 px-3 py-1 rounded text-xs hover:bg-slate-700">Limpiar Todo</button>
+      </div>
+    </section>
+
+    <!-- Columna 2: Selección de Paquete y Pedido (Lg: 5 cols) -->
+    <section class="lg:col-span-5 bg-slate-800/80 p-6 rounded-xl border border-slate-700 shadow-xl flex flex-col justify-between">
+      <div>
+        <h2 class="text-lg font-semibold text-amber-400 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-cubes"></i> 2. Paquete por Volumen
+        </h2>
+
+        <!-- Cards de Paquetes -->
+        <div class="space-y-3">
+          <label class="flex items-center justify-between p-3 rounded-lg border border-slate-700 bg-slate-900 cursor-pointer hover:border-amber-500 transition">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="pack" value="24" data-price="155" checked onchange="updateSummary()" class="accent-amber-500">
+              <div>
+                <p class="font-bold text-sm text-white">Lote de 24 Tazas</p>
+                <p class="text-xs text-slate-400">$155 c/u (Incluye blíster y envío)</p>
+              </div>
+            </div>
+            <span class="font-bold text-amber-400 text-sm">$3,720 MXN</span>
+          </label>
+
+          <label class="flex items-center justify-between p-3 rounded-lg border border-slate-700 bg-slate-900 cursor-pointer hover:border-amber-500 transition">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="pack" value="36" data-price="135" onchange="updateSummary()" class="accent-amber-500">
+              <div>
+                <p class="font-bold text-sm text-white">Lote de 36 Tazas</p>
+                <p class="text-xs text-slate-400">$135 c/u (Incluye blíster y envío)</p>
+              </div>
+            </div>
+            <span class="font-bold text-amber-400 text-sm">$4,860 MXN</span>
+          </label>
+
+          <label class="flex items-center justify-between p-3 rounded-lg border border-slate-700 bg-slate-900 cursor-pointer hover:border-amber-500 transition">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="pack" value="48" data-price="120" onchange="updateSummary()" class="accent-amber-500">
+              <div>
+                <p class="font-bold text-sm text-white">Lote de 48 Tazas</p>
+                <p class="text-xs text-slate-400">$120 c/u (Incluye blíster y envío)</p>
+              </div>
+            </div>
+            <span class="font-bold text-amber-400 text-sm">$5,760 MXN</span>
+          </label>
+        </div>
+
+        <!-- Datos de Entrega -->
+        <h2 class="text-lg font-semibold text-amber-400 mt-6 mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-address-card"></i> 3. Datos de Entrega
+        </h2>
+        <div class="space-y-2">
+          <input type="text" id="custName" placeholder="Nombre y Grado / Cargo" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+          <input type="tel" id="custPhone" placeholder="WhatsApp (10 dígitos)" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+          <textarea id="custAddress" placeholder="Dirección completa de envío / Unidad / Cuartel" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white"></textarea>
+        </div>
+      </div>
+
+      <!-- Resumen y Acción Final -->
+      <div class="mt-6 pt-4 border-t border-slate-700">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm text-slate-300">Total a Liquidar:</span>
+          <span id="totalDisplay" class="text-2xl font-bold text-amber-400">$3,720 MXN</span>
+        </div>
+
+        <button onclick="processOrder()" id="btnSubmit" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition">
+          <i class="fa-brands fa-whatsapp text-lg"></i> Confirmar Pedido y Enviar Diseño
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // --- Configuración Global ---
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzybE9jxZlqOHvn7raYBojx1zMnUn7Kp0FITJPh8VlI_vFt0Vusbhqm5sDDoUhMRB2RbA/exec";
+    const MI_WHATSAPP = "522292651155"; // Tu número internacional con lada
+
+    // --- Inicializar Lienzo Fabric.js ---
+    const canvas = new fabric.Canvas('mugCanvas', {
+      backgroundColor: '#0b1329' // Fondo azul naval profundo
+    });
+
+    // Subir imagen al lienzo
+    document.getElementById('imageLoader').addEventListener('change', function (e) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const imgObj = new Image();
+        imgObj.src = event.target.result;
+        imgObj.onload = function () {
+          const image = new fabric.Image(imgObj);
+          image.scaleToWidth(100);
+          canvas.centerObject(image);
+          canvas.add(image);
+          canvas.renderAll();
+        }
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    });
+
+    // Agregar texto institucional
+    function addText() {
+      const textVal = document.getElementById('textInput').value;
+      if (!textVal) return;
+      const text = new fabric.IText(textVal, {
+        left: 100,
+        top: 100,
+        fontFamily: 'Georgia',
+        fill: '#D4AF37', // Dorado
+        fontWeight: 'bold',
+        fontSize: 22
+      });
+      canvas.add(text);
+      document.getElementById('textInput').value = '';
+    }
+
+    function changeTextColor(color) {
+      const activeObj = canvas.getActiveObject();
+      if (activeObj && activeObj.type === 'i-text') {
+        activeObj.set('fill', color);
+        canvas.renderAll();
+      }
+    }
+
+    function deleteSelected() {
+      const activeObj = canvas.getActiveObject();
+      if (activeObj) canvas.remove(activeObj);
+    }
+
+    function clearCanvas() {
+      canvas.clear();
+      canvas.setBackgroundColor('#0b1329', canvas.renderAll.bind(canvas));
+    }
+
+    // Actualizar cálculo
+    function updateSummary() {
+      const selected = document.querySelector('input[name="pack"]:checked');
+      const qty = parseInt(selected.value);
+      const price = parseInt(selected.dataset.price);
+      const total = qty * price;
+      document.getElementById('totalDisplay').innerText = `$${total.toLocaleString()} MXN`;
+    }
+
+    // Procesar y enviar pedido
+    async function processOrder() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const packEl = document.querySelector('input[name="pack"]:checked');
+      const qty = packEl.value;
+      const total = qty * parseInt(packEl.dataset.price);
+
+      if (!name || !phone || !address) {
+        alert("Por favor completa los datos de entrega.");
+        return;
+      }
+
+      const btn = document.getElementById('btnSubmit');
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Guardando diseño...`;
+      btn.disabled = true;
+
+      // Obtener imagen del diseño en Base64
+      const imageBase64 = canvas.toDataURL({ format: 'png', quality: 1 });
+
+      const payload = {
+        nombre: name,
+        telefono: phone,
+        direccion: address,
+        paquete: qty,
+        total: total,
+        metodoPago: "SPEI / WhatsApp",
+        imageBase64: imageBase64
+      };
+
+      try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        const res = await response.json();
+
+        if (res.status === 'success') {
+          // Redirigir a WhatsApp con folio de pedido
+          const msg = encodeURIComponent(
+            `*NUEVO PEDIDO DE TAZAS PROTOCOLO*\n\n` +
+            `*Folio:* ${res.orderId}\n` +
+            `*Cliente:* ${name}\n` +
+            `*Paquete:* ${qty} Piezas\n` +
+            `*Total:* $${total} MXN (Envío incluido)\n` +
+            `*Dirección:* ${address}\n\n` +
+            `Adjunto mi comprobante de anticipo/pago para iniciar producción.`
+          );
+          window.location.href = `https://wa.me/${MI_WHATSAPP}?text=${msg}`;
+        } else {
+          alert("Error al procesar: " + res.message);
+          btn.disabled = false;
+        }
+      } catch (err) {
+        alert("No se pudo conectar con el servidor de pedidos. Contacta directamente por WhatsApp.");
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
