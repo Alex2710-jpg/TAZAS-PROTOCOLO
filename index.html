@@ -15,21 +15,20 @@
     .canvas-container { margin: 0 auto !important; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen">
-<div class="fixed inset-0 -z-50 pointer-events-none overflow-hidden">
-    
-    <div class="absolute inset-0 grid grid-cols-2 md:grid-cols-4 gap-2 opacity-25 filter blur-[6px] scale-105">
-      <img src="taza1.jpg" alt="Fondo 1" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80'">
-      <img src="taza2.jpg" alt="Fondo 2" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=600&auto=format&fit=crop&q=80'">
-      <img src="taza3.jpg" alt="Fondo 3" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&auto=format&fit=crop&q=80'">
-      <img src="taza1.jpg" alt="Fondo 4" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=600&auto=format&fit=crop&q=80'">
-    </div>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen relative overflow-x-hidden">
 
+  <div class="fixed inset-0 -z-50 pointer-events-none overflow-hidden">
+    <div class="absolute inset-0 grid grid-cols-2 md:grid-cols-4 gap-2 opacity-20 filter blur-md scale-105">
+      <img src="taza1.jpg" alt="Fondo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80'">
+      <img src="taza2.jpg" alt="Fondo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=600&auto=format&fit=crop&q=80'">
+      <img src="taza3.jpg" alt="Fondo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&auto=format&fit=crop&q=80'">
+      <img src="taza1.jpg" alt="Fondo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=600&auto=format&fit=crop&q=80'">
+    </div>
     <div class="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-900/85 to-slate-950"></div>
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(2,6,23,0.85)_100%)]"></div>
   </div>
 
-  <header class="border-b border-amber-500/20 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 py-7 px-4 text-center">
+  <header class="border-b border-amber-500/20 bg-slate-950/80 backdrop-blur-sm py-7 px-4 text-center">
     <div class="max-w-4xl mx-auto">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-2">
         <i class="fa-solid fa-anchor"></i> Souvenirs Militares y Protocolo Institucional
@@ -38,83 +37,47 @@
         Tazas Conmemorativas de Gala
       </h1>
       <p class="text-xs md:text-sm text-slate-300 mt-2 max-w-2xl mx-auto">
-        Impresión <strong class="text-amber-300">DTF UV en Alto Relieve Dorado</strong> con caja individual caballete y envío nacional incluidos.
+        Impresión <strong class="text-amber-300">DTF UV en Alto Relieve Dorado</strong> con estuche individual caballete y envío nacional incluidos.
       </p>
     </div>
   </header>
- <section class="max-w-7xl mx-auto px-4 md:px-8 pt-6 pb-2">
-    <div class="text-center mb-5">
-      <span class="text-amber-400 text-xs font-bold uppercase tracking-widest font-cinzel">Calidad de Fabricación</span>
-      <h2 class="text-2xl md:text-3xl font-extrabold text-white font-cinzel">Acabados Reales en DTF UV y Presentación de Gala</h2>
-      <p class="text-slate-400 text-xs mt-1 max-w-xl mx-auto">Relieve táctil barnizado de alta adherencia y empaque individual tipo exhibidor listo para entrega protocolaria.</p>
-    </div>
 
+  <section class="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-4">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-      
-      <div class="group relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 shadow-xl">
-        <div class="h-64 overflow-hidden bg-slate-950 flex items-center justify-center">
-          <img src="taza1.jpeg" alt="Taza Conmemorativa Frente" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80'">
+      <div class="rounded-2xl overflow-hidden border border-slate-800 bg-slate-900/80 shadow-xl backdrop-blur-sm">
+        <div class="h-56 overflow-hidden bg-slate-950">
+          <img src="taza1.jpg" alt="Acabado Dorado" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80'">
         </div>
-        <div class="p-4 bg-gradient-to-t from-slate-950 via-slate-900 to-slate-900 border-t border-slate-800/80">
-          <div class="flex items-center gap-2 text-amber-400 text-xs font-bold font-cinzel mb-1">
-            <i class="fa-solid fa-certificate"></i> Relieve Táctil Dorado
-          </div>
-          <p class="text-slate-400 text-[11px]">Tinta DTF UV curada con barniz brillante resistente a microondas y lavados intensos.</p>
+        <div class="p-4 border-t border-slate-800">
+          <h3 class="text-amber-400 text-xs font-bold font-cinzel uppercase"><i class="fa-solid fa-certificate mr-1"></i> Relieve Táctil DTF UV</h3>
+          <p class="text-slate-400 text-[11px] mt-1">Tinta curada con barniz brillante de alta adherencia para condecoraciones y aniversarios.</p>
         </div>
       </div>
-
-      <div class="group relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 shadow-xl">
-        <div class="h-64 overflow-hidden bg-slate-950 flex items-center justify-center">
-          <img src="taza2.jpeg" alt="Detalle de Impresión DTF UV" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=600&auto=format&fit=crop&q=80'">
+      <div class="rounded-2xl overflow-hidden border border-slate-800 bg-slate-900/80 shadow-xl backdrop-blur-sm">
+        <div class="h-56 overflow-hidden bg-slate-950">
+          <img src="taza2.jpg" alt="Lemas en Arco" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=600&auto=format&fit=crop&q=80'">
         </div>
-        <div class="p-4 bg-gradient-to-t from-slate-950 via-slate-900 to-slate-900 border-t border-slate-800/80">
-          <div class="flex items-center gap-2 text-amber-400 text-xs font-bold font-cinzel mb-1">
-            <i class="fa-solid fa-bezier-curve"></i> Tipografía en Arco y Lemas
-          </div>
-          <p class="text-slate-400 text-[11px]">Diseños perimetrales exactos para condecoraciones, promociones y aniversarios de unidades.</p>
+        <div class="p-4 border-t border-slate-800">
+          <h3 class="text-amber-400 text-xs font-bold font-cinzel uppercase"><i class="fa-solid fa-bezier-curve mr-1"></i> Formato de Gala y Lemas</h3>
+          <p class="text-slate-400 text-[11px] mt-1">Diseños circulares perimetrales para escudos de buques, zonas navales y promociones.</p>
         </div>
       </div>
-
-      <div class="group relative rounded-2xl overflow-hidden border border-amber-500/30 bg-slate-900 shadow-xl">
-        <div class="absolute top-3 right-3 z-10 bg-amber-500 text-slate-950 text-[10px] font-black uppercase px-2.5 py-1 rounded-full shadow">
-          Incluido Gratis
+      <div class="rounded-2xl overflow-hidden border border-amber-500/30 bg-slate-900/80 shadow-xl backdrop-blur-sm relative">
+        <span class="absolute top-3 right-3 bg-amber-500 text-slate-950 text-[10px] font-black uppercase px-2.5 py-1 rounded-full shadow z-10">Incluido</span>
+        <div class="h-56 overflow-hidden bg-slate-950">
+          <img src="taza3.jpg" alt="Caja de Gala" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&auto=format&fit=crop&q=80'">
         </div>
-        <div class="h-64 overflow-hidden bg-slate-950 flex items-center justify-center">
-          <img src="taza1.jpeg" alt="Estuche de Presentación con Ventana" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&auto=format&fit=crop&q=80'">
-        </div>
-        <div class="p-4 bg-gradient-to-t from-slate-950 via-slate-900 to-slate-900 border-t border-slate-800/80">
-          <div class="flex items-center gap-2 text-amber-400 text-xs font-bold font-cinzel mb-1">
-            <i class="fa-solid fa-gift"></i> Caja Caballete Individual
-          </div>
-          <p class="text-slate-400 text-[11px]">Empaque rígido con manija y ventanilla frontal de exhibición, listo para entregar en ceremonias.</p>
+        <div class="p-4 border-t border-slate-800">
+          <h3 class="text-amber-400 text-xs font-bold font-cinzel uppercase"><i class="fa-solid fa-gift mr-1"></i> Caja Caballete Exhibidora</h3>
+          <p class="text-slate-400 text-[11px] mt-1">Empaque individual rígido con manija y visor transparente listo para entrega solemne.</p>
         </div>
       </div>
-
     </div>
   </section>
-  <div class="max-w-md mx-auto my-6 p-2 bg-slate-900 border border-amber-500/30 rounded-2xl shadow-2xl overflow-hidden">
-  <div class="text-center pb-2 pt-1">
-    <span class="text-amber-400 text-xs font-bold font-cinzel uppercase tracking-wider flex items-center justify-center gap-1.5">
-      <i class="fa-solid fa-play text-amber-500"></i> Acabado Real en Video
-    </span>
-  </div>
-  <div class="rounded-xl overflow-hidden bg-slate-950 aspect-[9/16] md:aspect-video flex items-center justify-center">
-    <video 
-      src="video1.mp4" 
-      autoplay 
-      loop 
-      muted 
-      playsinline 
-      controls 
-      class="w-full h-full object-cover">
-      Tu navegador no soporta la reproducción de video.
-    </video>
-  </div>
-</div>
 
   <main class="max-w-7xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
     
-    <section class="lg:col-span-7 bg-slate-900/90 p-5 md:p-6 rounded-2xl border border-slate-800 shadow-2xl flex flex-col justify-between">
+    <section class="lg:col-span-7 bg-slate-900/90 p-5 md:p-6 rounded-2xl border border-slate-800 shadow-2xl flex flex-col justify-between backdrop-blur-sm">
       <div>
         <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
           <h2 class="text-base font-bold text-amber-400 flex items-center gap-2 font-cinzel">
@@ -153,7 +116,7 @@
             <i class="fa-solid fa-font"></i> Texto, Lemas y Efecto Arco
           </h3>
           <div class="flex gap-2">
-            <input type="text" id="textInput" placeholder="Ej. SECRETARÍA DE MARINA | ARM POZA RICA" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
+            <input type="text" id="textInput" placeholder="Ej. SECRETARÍA DE MARINA | ARM XINANTÉCATL" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
             <button onclick="addText()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-4 py-1.5 rounded-lg text-xs uppercase transition">
               Añadir
             </button>
@@ -185,8 +148,8 @@
             </div>
 
             <div class="flex gap-1 justify-center">
-              <button onclick="toggleBold()" class="px-2 py-1 bg-slate-900 border border-slate-700 rounded text-xs"><i class="fa-solid fa-bold"></i></button>
-              <button onclick="toggleItalic()" class="px-2 py-1 bg-slate-900 border border-slate-700 rounded text-xs"><i class="fa-solid fa-italic"></i></button>
+              <button onclick="toggleBold()" class="px-2 py-1 bg-slate-900 border border-slate-700 rounded text-xs" title="Negrita"><i class="fa-solid fa-bold"></i></button>
+              <button onclick="toggleItalic()" class="px-2 py-1 bg-slate-900 border border-slate-700 rounded text-xs" title="Cursiva"><i class="fa-solid fa-italic"></i></button>
             </div>
 
             <div class="flex gap-1 justify-center">
@@ -199,7 +162,7 @@
       </div>
 
       <div class="flex justify-between items-center pt-3 border-t border-slate-800 mt-3">
-        <span class="text-[11px] text-slate-500">Selecciona cualquier elemento en el lienzo para moverlo o editarlo</span>
+        <span class="text-[11px] text-slate-500">Haz clic sobre cualquier objeto para editar o mover</span>
         <div class="flex gap-2">
           <button onclick="deleteSelected()" class="bg-rose-950/70 text-rose-300 border border-rose-800 px-3 py-1 rounded text-xs flex items-center gap-1">
             <i class="fa-solid fa-trash"></i> Borrar
@@ -211,7 +174,7 @@
       </div>
     </section>
 
-    <section class="lg:col-span-5 bg-slate-900/90 p-5 md:p-6 rounded-2xl border border-slate-800 shadow-2xl flex flex-col justify-between">
+    <section class="lg:col-span-5 bg-slate-900/90 p-5 md:p-6 rounded-2xl border border-slate-800 shadow-2xl flex flex-col justify-between backdrop-blur-sm">
       <div>
         <h2 class="text-base font-bold text-amber-400 mb-3 flex items-center gap-2 font-cinzel">
           <i class="fa-solid fa-boxes-stacked text-amber-500"></i> 2. Paquetes por Volumen
@@ -223,7 +186,7 @@
               <input type="radio" name="pack" value="24" data-price="155" checked onchange="updateSummary()" class="accent-amber-500">
               <div>
                 <p class="font-bold text-xs text-white">Lote de 24 Tazas</p>
-                <p class="text-[10px] text-slate-400">$155 c/u · Envío y empaque incluido</p>
+                <p class="text-[10px] text-slate-400">$155 c/u · Envío y estuche incluidos</p>
               </div>
             </div>
             <span class="font-bold text-amber-400 text-sm font-cinzel">$3,720 MXN</span>
@@ -234,7 +197,7 @@
               <input type="radio" name="pack" value="36" data-price="135" onchange="updateSummary()" class="accent-amber-500">
               <div>
                 <p class="font-bold text-xs text-white">Lote de 36 Tazas</p>
-                <p class="text-[10px] text-slate-400">$135 c/u · Envío y empaque incluido</p>
+                <p class="text-[10px] text-slate-400">$135 c/u · Envío y estuche incluidos</p>
               </div>
             </div>
             <span class="font-bold text-amber-400 text-sm font-cinzel">$4,860 MXN</span>
@@ -245,7 +208,7 @@
               <input type="radio" name="pack" value="48" data-price="120" onchange="updateSummary()" class="accent-amber-500">
               <div>
                 <p class="font-bold text-xs text-amber-200">Lote de 48 Tazas (Recomendado)</p>
-                <p class="text-[10px] text-slate-400">$120 c/u · Envío y empaque incluido</p>
+                <p class="text-[10px] text-slate-400">$120 c/u · Envío y estuche incluidos</p>
               </div>
             </div>
             <span class="font-bold text-amber-400 text-sm font-cinzel">$5,760 MXN</span>
@@ -256,9 +219,9 @@
           <i class="fa-solid fa-user-shield text-amber-500"></i> 3. Datos de Destino
         </h2>
         <div class="space-y-2">
-          <input type="text" id="custName" placeholder="Nombre completo y Grado / Cargo" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-          <input type="tel" id="custPhone" placeholder="Teléfono WhatsApp (10 dígitos)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white">
-          <textarea id="custAddress" placeholder="Dirección completa / Zona Naval / Región / Unidad militar" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white"></textarea>
+          <input type="text" id="custName" placeholder="Nombre completo y Grado / Cargo" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 outline-none">
+          <input type="tel" id="custPhone" placeholder="Teléfono WhatsApp (10 dígitos)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 outline-none">
+          <textarea id="custAddress" placeholder="Dirección completa / Zona Naval / Región / Unidad militar" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-400 outline-none"></textarea>
         </div>
 
         <h2 class="text-base font-bold text-amber-400 mt-4 mb-2 flex items-center gap-2 font-cinzel">
@@ -288,7 +251,7 @@
               Copiar
             </button>
           </div>
-          <p class="text-[10px] text-emerald-400 mt-2 text-center">Puedes apartar con el 50% de anticipo para iniciar producción.</p>
+          <p class="text-[10px] text-emerald-400 mt-2 text-center">Anticipo del 50% para iniciar producción y el resto contra entrega.</p>
         </div>
 
         <div id="cardBox" class="hidden bg-slate-950 p-3 rounded-xl border border-sky-500/30 text-xs text-center">
@@ -310,6 +273,32 @@
     </section>
   </main>
 
+  <section class="max-w-4xl mx-auto my-12 px-4">
+    <div class="bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-amber-500/30 rounded-2xl p-6 md:p-8 text-center shadow-2xl relative overflow-hidden backdrop-blur-sm">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
+        <i class="fa-solid fa-headset"></i> Atención Inmediata
+      </div>
+      <h3 class="text-2xl font-bold font-cinzel text-amber-400 mb-2">¿Requieres Asesoría Especial o Cotización Oficial?</h3>
+      <p class="text-xs md:text-sm text-slate-300 max-w-xl mx-auto mb-6">
+        Te apoyamos con la vectorización de escudos, formatos para comisiones oficiales, órdenes de compra o requerimientos a la medida.
+      </p>
+      
+      <a href="https://wa.me/5212292651155?text=Hola%2C%20solicito%20atenci%C3%B3n%20personalizada%20para%20un%20pedido%20de%20tazas%20conmemorativas." 
+         target="_blank" 
+         class="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl text-sm uppercase tracking-wider shadow-lg transition transform hover:scale-105 active:scale-95">
+        <i class="fa-brands fa-whatsapp text-xl"></i> Chatear por WhatsApp (229 265 1155)
+      </a>
+      <p class="text-[11px] text-slate-500 mt-3">Atención personalizada directa para unidades e instituciones.</p>
+    </div>
+  </section>
+
+  <a href="https://wa.me/5212292651155?text=Hola%2C%20tengo%20dudas%20sobre%20el%20dise%C3%B1o%20y%20pedido%20de%20mis%20tazas." 
+     target="_blank" 
+     class="fixed bottom-6 right-6 z-50 bg-emerald-600 hover:bg-emerald-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition transform hover:scale-110 active:scale-90 border-2 border-emerald-400/40"
+     title="Atención personalizada por WhatsApp">
+    <i class="fa-brands fa-whatsapp text-3xl"></i>
+  </a>
+
   <div id="cropModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-4">
       <h3 class="text-sm font-bold text-amber-400 mb-3 flex items-center gap-2">
@@ -326,13 +315,10 @@
   </div>
 
   <script>
-    // ==========================================
-    // CONFIGURACIÓN OFICIAL
-    // ==========================================
+    // Variables oficiales
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxO8OnS1lsdaKmzNLOljUpn2z4okD8STI3LVfFtUgqCjVXnZFJPT72gbRNQmPjFhcXl3w/exec"; 
     const MI_WHATSAPP = "5212292651155"; 
 
-    // Enlaces de Mercado Pago corregidos y limpios
     const LINKS_MERCADO_PAGO = {
       "24": "https://mpago.la/1rdi41t",
       "36": "https://mpago.la/228Tq9v",
@@ -341,13 +327,13 @@
 
     let selectedMethod = "spei";
 
-    // Inicializar Canvas Fabric
+    // Inicializar Canvas
     const canvas = new fabric.Canvas('mugCanvas', {
       backgroundColor: '#070d1d',
       preserveObjectStacking: true
     });
 
-    // Control del slider al seleccionar objetos
+    // Control del slider
     canvas.on('selection:created', onObjectSelected);
     canvas.on('selection:updated', onObjectSelected);
     canvas.on('selection:cleared', function() {
@@ -363,7 +349,7 @@
       }
     }
 
-    // --- RECORTE DE IMÁGENES (Cropper.js) ---
+    // Recorte de imágenes
     let cropper = null;
     let currentTargetPosition = { left: 120, top: 115 };
 
@@ -420,7 +406,7 @@
       cancelCrop();
     }
 
-    // --- GENERADOR DE TEXTO CURVADO EN ARCO ---
+    // Texto curvado en arco
     function createCurvedGroup(textString, curvature, options) {
       const letters = textString.split('');
       const charObjects = [];
@@ -529,8 +515,7 @@
 
     function changeFontFamily(f) {
       const obj = canvas.getActiveObject();
-      if (!obj) return;
-      if (obj.customType === 'curvedText') {
+      if (obj && obj.customType === 'curvedText') {
         obj.textOptions.fontFamily = f;
         updateCurvedText(obj.curvature);
       }
@@ -538,8 +523,7 @@
 
     function changeTextColor(c) {
       const obj = canvas.getActiveObject();
-      if (!obj) return;
-      if (obj.customType === 'curvedText') {
+      if (obj && obj.customType === 'curvedText') {
         obj.textOptions.fill = c;
         updateCurvedText(obj.curvature);
       }
@@ -547,8 +531,7 @@
 
     function toggleBold() {
       const obj = canvas.getActiveObject();
-      if (!obj) return;
-      if (obj.customType === 'curvedText') {
+      if (obj && obj.customType === 'curvedText') {
         obj.textOptions.fontWeight = obj.textOptions.fontWeight === 'bold' ? 'normal' : 'bold';
         updateCurvedText(obj.curvature);
       }
@@ -556,8 +539,7 @@
 
     function toggleItalic() {
       const obj = canvas.getActiveObject();
-      if (!obj) return;
-      if (obj.customType === 'curvedText') {
+      if (obj && obj.customType === 'curvedText') {
         obj.textOptions.fontStyle = obj.textOptions.fontStyle === 'italic' ? 'normal' : 'italic';
         updateCurvedText(obj.curvature);
       }
@@ -584,7 +566,7 @@
       document.getElementById('curveSlider').value = 0;
     }
 
-    // --- RESUMEN Y MÉTODOS DE PAGO ---
+    // Resumen y Pago
     function updateSummary() {
       const selected = document.querySelector('input[name="pack"]:checked');
       const qty = parseInt(selected.value);
@@ -618,7 +600,7 @@
       alert("CLABE copiada: 722969010741762029");
     }
 
-    // --- PROCESAMIENTO, DESCARGA Y ENVÍO ---
+    // Procesar orden y descarga
     async function processOrder() {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
@@ -637,11 +619,10 @@
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Guardando y Descargando...`;
       btn.disabled = true;
 
-      // Deseleccionar todo en el lienzo para captura limpia
       canvas.discardActiveObject();
       canvas.renderAll();
 
-      // 1. OBTENER IMAGEN EN ALTA RESOLUCIÓN Y DESCARGAR
+      // 1. Descarga del PNG en alta resolución
       const imageBase64 = canvas.toDataURL({ format: 'png', quality: 1.0 });
       const downloadLink = document.createElement('a');
       downloadLink.href = imageBase64;
@@ -650,7 +631,7 @@
       downloadLink.click();
       document.body.removeChild(downloadLink);
 
-      // 2. ENVIAR A GOOGLE DRIVE Y GOOGLE SHEETS
+      // 2. Envío a Sheets/Drive
       const payload = {
         nombre: name,
         telefono: phone,
@@ -672,12 +653,12 @@
         console.warn("Envío asíncrono completado.");
       }
 
-      // 3. SI SELECCIONÓ TARJETA, ABRIR LINK DE MERCADO PAGO
+      // 3. Pasarela de tarjeta si aplica
       if (selectedMethod === 'card' && LINKS_MERCADO_PAGO[qty]) {
         window.open(LINKS_MERCADO_PAGO[qty], '_blank');
       }
 
-      // 4. ABRIR WHATSAPP
+      // 4. Redirección a WhatsApp
       const msg = encodeURIComponent(
         `*SOLICITUD DE PEDIDO - TAZAS DE PROTOCOLO*\n\n` +
         `*Folio:* ${localOrderId}\n` +
@@ -694,6 +675,9 @@
         window.location.href = `https://wa.me/${MI_WHATSAPP}?text=${msg}`;
       }, 1000);
     }
+  </script>
+</body>
+</html>
   </script>
 <section class="max-w-4xl mx-auto my-12 px-4">
     <div class="bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-amber-500/30 rounded-2xl p-6 md:p-8 text-center shadow-2xl relative overflow-hidden">
