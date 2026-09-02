@@ -39,7 +39,7 @@
           <h2 class="text-base font-bold text-amber-400 flex items-center gap-2 font-cinzel">
             <i class="fa-solid fa-compass-drafting text-amber-500"></i> 1. Taller de Personalización
           </h2>
-          <span class="text-[11px] bg-slate-800 text-slate-400 px-2.5 py-1 rounded">Área imprimible: 20 × 9.5 cm</span>
+          <span class="text-[11px] bg-slate-800 text-slate-400 px-2.5 py-1 rounded">Área DTF: 20 × 9.5 cm</span>
         </div>
 
         <div class="bg-slate-950 p-2 rounded-xl border border-slate-800 flex flex-col items-center">
@@ -211,19 +211,19 @@
         </div>
 
         <div id="cardBox" class="hidden bg-slate-950 p-3 rounded-xl border border-sky-500/30 text-xs text-center">
-          <p class="text-slate-300 text-xs mb-1">Pago seguro con tarjeta de débito/crédito vía Mercado Pago.</p>
-          <p class="text-[11px] text-slate-400">Al confirmar, serás contactado vía WhatsApp con el enlace oficial de pago.</p>
+          <p class="text-slate-300 text-xs mb-1">Pago seguro con tarjeta de crédito o débito.</p>
+          <p class="text-[11px] text-slate-400">Al presionar confirmar, se abrirá la pasarela segura de Mercado Pago.</p>
         </div>
       </div>
 
       <div class="mt-4 pt-3 border-t border-slate-800">
         <div class="flex justify-between items-center mb-3">
-          <span class="text-xs text-slate-400">Total a Pagar (Envío Incluido):</span>
+          <span class="text-xs text-slate-400">Total a Liquidar (Envío Incluido):</span>
           <span id="totalDisplay" class="text-2xl font-bold font-cinzel text-amber-400">$3,720 MXN</span>
         </div>
 
-        <button onclick="processOrder()" id="btnSubmit" class="w-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 text-slate-950 font-black py-3 px-4 rounded-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-lg transition">
-          <i class="fa-brands fa-whatsapp text-base"></i> Confirmar Pedido y Enviar Diseño
+        <button onclick="processOrder()" id="btnSubmit" class="w-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 text-slate-950 font-black py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-lg transition transform active:scale-95">
+          <i class="fa-brands fa-whatsapp text-base"></i> Confirmar Pedido y Descargar Diseño
         </button>
       </div>
     </section>
@@ -246,19 +246,27 @@
 
   <script>
     // ==========================================
-    // CONFIGURACIÓN DE TU NEGOCIO
+    // CONFIGURACIÓN OFICIAL
     // ==========================================
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxO8OnS1lsdaKmzNLOljUpn2z4okD8STI3LVfFtUgqCjVXnZFJPT72gbRNQmPjFhcXl3w/exec"; 
     const MI_WHATSAPP = "5212292651155"; 
+
+    // Enlaces de Mercado Pago corregidos y limpios
+    const LINKS_MERCADO_PAGO = {
+      "24": "https://mpago.la/1rdi41t",
+      "36": "https://mpago.la/228Tq9v",
+      "48": "https://mpago.la/1wnhBj2"
+    };
 
     let selectedMethod = "spei";
 
     // Inicializar Canvas Fabric
     const canvas = new fabric.Canvas('mugCanvas', {
-      backgroundColor: '#070d1d'
+      backgroundColor: '#070d1d',
+      preserveObjectStacking: true
     });
 
-    // Actualizar selector de curva cuando el usuario cambia de objeto
+    // Control del slider al seleccionar objetos
     canvas.on('selection:created', onObjectSelected);
     canvas.on('selection:updated', onObjectSelected);
     canvas.on('selection:cleared', function() {
@@ -274,7 +282,7 @@
       }
     }
 
-    // --- MANEJO DE RECORTE (Cropper.js) ---
+    // --- RECORTE DE IMÁGENES (Cropper.js) ---
     let cropper = null;
     let currentTargetPosition = { left: 120, top: 115 };
 
@@ -526,10 +534,10 @@
 
     function copyClabe() {
       navigator.clipboard.writeText("722969010741762029");
-      alert("CLABE copiada al portapapeles: 722969010741762029");
+      alert("CLABE copiada: 722969010741762029");
     }
 
-    // --- ENVÍO DEL PEDIDO ---
+    // --- PROCESAMIENTO, DESCARGA Y ENVÍO ---
     async function processOrder() {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
@@ -545,12 +553,23 @@
       }
 
       const btn = document.getElementById('btnSubmit');
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Procesando Pedido...`;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Guardando y Descargando...`;
       btn.disabled = true;
 
-      // Obtener imagen del lienzo
-      const imageBase64 = canvas.toDataURL({ format: 'png', quality: 0.85 });
+      // Deseleccionar todo en el lienzo para captura limpia
+      canvas.discardActiveObject();
+      canvas.renderAll();
 
+      // 1. OBTENER IMAGEN EN ALTA RESOLUCIÓN Y DESCARGAR
+      const imageBase64 = canvas.toDataURL({ format: 'png', quality: 1.0 });
+      const downloadLink = document.createElement('a');
+      downloadLink.href = imageBase64;
+      downloadLink.download = `${localOrderId}-diseno-taza.png`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      // 2. ENVIAR A GOOGLE DRIVE Y GOOGLE SHEETS
       const payload = {
         nombre: name,
         telefono: phone,
@@ -569,10 +588,15 @@
           body: JSON.stringify(payload)
         });
       } catch (err) {
-        console.warn("Envío procesado de forma asíncrona.");
+        console.warn("Envío asíncrono completado.");
       }
 
-      // Redirigir a WhatsApp
+      // 3. SI SELECCIONÓ TARJETA, ABRIR LINK DE MERCADO PAGO
+      if (selectedMethod === 'card' && LINKS_MERCADO_PAGO[qty]) {
+        window.open(LINKS_MERCADO_PAGO[qty], '_blank');
+      }
+
+      // 4. ABRIR WHATSAPP
       const msg = encodeURIComponent(
         `*SOLICITUD DE PEDIDO - TAZAS DE PROTOCOLO*\n\n` +
         `*Folio:* ${localOrderId}\n` +
@@ -580,11 +604,14 @@
         `*Tel:* ${phone}\n` +
         `*Paquete:* ${qty} Tazas de Gala\n` +
         `*Total:* $${total.toLocaleString()} MXN (Envío y Blíster incluidos)\n` +
-        `*Método:* ${selectedMethod === 'spei' ? 'Transferencia Bancaria' : 'Tarjeta de Crédito/Débito'}\n` +
+        `*Método de Pago:* ${selectedMethod === 'spei' ? 'Transferencia SPEI' : 'Tarjeta (Mercado Pago)'}\n` +
         `*Destino:* ${address}\n\n` +
-        `_He generado mi diseño con lema curvado en la plataforma. Envío comprobante para iniciar producción._`
+        `_He descargado mi diseño oficial con folio ${localOrderId}. Adjunto comprobante de pago para iniciar producción._`
       );
-      window.location.href = `https://wa.me/${MI_WHATSAPP}?text=${msg}`;
+
+      setTimeout(() => {
+        window.location.href = `https://wa.me/${MI_WHATSAPP}?text=${msg}`;
+      }, 1000);
     }
   </script>
 </body>
